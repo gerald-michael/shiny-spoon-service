@@ -1,0 +1,30 @@
+{
+  "name": "shiny-spoon-service",
+  "version": "0.1.0",
+  "description": "logic for the shiny spoon pentest kit",
+  "main": "index.node",
+  "scripts": {
+    "build": "cargo-cp-artifact -nc index.node -- cargo build --message-format=json-render-diagnostics",
+    "install": "npm run build",
+    "test": "cargo test"
+  },
+  "author": "gerald",
+  "license": "ISC",
+  "devDependencies": {
+    "cargo-cp-artifact": "^0.1",
+    "node-pre-gyp-github": "^1.4.3"
+  },
+  "keywords": [
+    "pen-test",
+    "kit",
+    "cryptography",
+    "virus",
+    "total",
+    "rust",
+    "neon",
+    "javascript"
+  ],
+  "dependencies": {
+    "node-pre-gyp": "^0.17.0"
+  }
+}

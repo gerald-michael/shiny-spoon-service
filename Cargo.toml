@@ -1,0 +1,36 @@
+[package]
+name = "shiny-spoon-service"
+version = "0.1.0"
+description = "logic for the shiny spoon pentest kit"
+authors = ["gerald"]
+license = "ISC"
+edition = "2018"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies.neon]
+version = "0.8"
+default-features = false
+features = ["napi-6","event-queue-api"]
+
+[dependencies]
+hash-data = "0.3.0"
+lsb_png_steganography = "0.1.0"
+lsb_text_png_steganography = "0.1.2"
+steganography = "1.0.2"
+regex = "1.0.5"
+zxcvbn = "2.1.1"
+hex = "0.4.3"
+brain_fuck = "0.1.1"
+rust-crypto = "0.2.36"
+cienli = "0.3.0"
+inline-python = "0.7.0"
+base64 = "0.13.0"
+bs58 = "0.4.0"
+base32 = "0.4.0"
+ascii85 = "0.2.1"
+boba = "4.2.0"
+crypto-brainfuck = "0.2.0"
+itertools = "0.10.1"
