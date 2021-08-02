@@ -91,7 +91,7 @@ pub fn polybius_square_decode(mut cx: FunctionContext) -> JsResult<JsObject> {
             result.set(&mut cx, "data", new_data).ok();
         }
         Err(_) => {
-            let error_message = cx.string("invalid key");
+            let error_message = cx.string("Invalid Cipher Text");
             result.set(&mut cx, "error", error_message).ok();
         }
     };
@@ -109,7 +109,7 @@ pub fn scytale_encode(mut cx: FunctionContext) -> JsResult<JsObject> {
             result.set(&mut cx, "data", data).ok();
         }
         Err(_) => {
-            let error_message = cx.string("invalid key");
+            let error_message = cx.string("Invalid Key");
             result.set(&mut cx, "error", error_message).ok();
         }
     }
@@ -127,7 +127,7 @@ pub fn scytale_decode(mut cx: FunctionContext) -> JsResult<JsObject> {
             result.set(&mut cx, "data", data).ok();
         }
         Err(_) => {
-            let error_message = cx.string("invalid key");
+            let error_message = cx.string("Invalid Key");
             result.set(&mut cx, "error", error_message).ok();
         }
     }
@@ -184,7 +184,7 @@ pub fn rot_encode(mut cx: FunctionContext) -> JsResult<JsString> {
     } else if algorithm == 47 {
         rot_cipher = rot::Rot::new(&plain_text, rot::RotType::Rot47);
     } else {
-        return Ok(cx.string("invalid cipher"));
+        return Ok(cx.string("Invalid Cipher"));
     }
     let cipher = rot_cipher.encipher();
     Ok(cx.string(cipher))
@@ -204,7 +204,7 @@ pub fn rot_decode(mut cx: FunctionContext) -> JsResult<JsString> {
     } else if algorithm == 47 {
         rot_cipher = rot::Rot::new(&cipher_text, rot::RotType::Rot47);
     } else {
-        return Ok(cx.string("invalid cipher"));
+        return Ok(cx.string("Invalid Cipher"));
     }
     let plain_text = rot_cipher.decipher();
     Ok(cx.string(plain_text))
@@ -222,7 +222,7 @@ pub fn bacon_encode(mut cx: FunctionContext) -> JsResult<JsObject> {
             result.set(&mut cx, "data", data).ok();
         }
         Err(_) => {
-            let error_message = cx.string("Non coprime key");
+            let error_message = cx.string("Invalid key");
             result.set(&mut cx, "error", error_message).ok();
         }
     }
@@ -240,7 +240,7 @@ pub fn bacon_decode(mut cx: FunctionContext) -> JsResult<JsObject> {
             result.set(&mut cx, "data", data).ok();
         }
         Err(_) => {
-            let error_message = cx.string("Non coprime key");
+            let error_message = cx.string("Invalid key");
             result.set(&mut cx, "error", error_message).ok();
         }
     }
@@ -673,20 +673,6 @@ pub fn sha3_512_hash(mut cx: FunctionContext) -> JsResult<JsString> {
     let arg0: Handle<JsString> = cx.argument::<JsString>(0)?;
     let plain_text = arg0.value(&mut cx);
     let mut hasher = sha3::Sha3::sha3_512();
-    hasher.input_str(&plain_text);
-    Ok(cx.string(hasher.result_str()))
-}
-pub fn shake128_hash(mut cx: FunctionContext) -> JsResult<JsString> {
-    let arg0: Handle<JsString> = cx.argument::<JsString>(0)?;
-    let plain_text = arg0.value(&mut cx);
-    let mut hasher = sha3::Sha3::shake_128();
-    hasher.input_str(&plain_text);
-    Ok(cx.string(hasher.result_str()))
-}
-pub fn shake256_hash(mut cx: FunctionContext) -> JsResult<JsString> {
-    let arg0: Handle<JsString> = cx.argument::<JsString>(0)?;
-    let plain_text = arg0.value(&mut cx);
-    let mut hasher = sha3::Sha3::shake_256();
     hasher.input_str(&plain_text);
     Ok(cx.string(hasher.result_str()))
 }

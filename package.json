@@ -8,6 +8,13 @@
     "install": "npm run build",
     "test": "cargo test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gerald9784/shiny-spoon-service.git"
+  },
+  "files": [
+    "lib"
+  ],
   "author": "gerald",
   "license": "ISC",
   "devDependencies": {

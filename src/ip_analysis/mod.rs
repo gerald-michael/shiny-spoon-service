@@ -1,5 +1,6 @@
 use neon::prelude::*;
 mod banner_grabber;
+mod get_services;
 mod port_scanner;
 pub fn grab_banner(mut cx: FunctionContext) -> JsResult<JsObject> {
     let arg0: Handle<JsString> = cx.argument::<JsString>(0)?;
@@ -47,19 +48,32 @@ pub fn scan_port_addrs(mut cx: FunctionContext) -> JsResult<JsArray> {
         let address = JsObject::new(&mut cx);
         let ip = cx.string(open_adrr.ip.clone());
         let port = cx.number(open_adrr.port);
-        let x = port_scanner::get_services_tcp();
-        let service_name = cx.string(x[&open_adrr.port].service_name.clone());
-        let protocal = cx.string(x[&open_adrr.port].protocal.clone());
-        let open_frequency = cx.number(x[&open_adrr.port].open_frequency.clone());
-        let optional_comment = cx.string(x[&open_adrr.port].optional_comment.clone());
+        let x = get_services::get_services_tcp();
+        if x.contains_key(&open_adrr.port) {
+            let service_name = cx.string(x[&open_adrr.port].service.clone());
+            let protocal = cx.string(x[&open_adrr.port].protocal.clone());
+            let open_frequency = cx.number(x[&open_adrr.port].frequency.clone());
+            let optional_comment = cx.string(x[&open_adrr.port].description.clone());
+            address.set(&mut cx, "service_name", service_name).ok();
+            address.set(&mut cx, "protocal", protocal).ok();
+            address.set(&mut cx, "open_frequency", open_frequency).ok();
+            address
+                .set(&mut cx, "optional_comment", optional_comment)
+                .ok();
+        } else {
+            let service_name = cx.string("unknown");
+            let protocal = cx.string("tcp");
+            let open_frequency = cx.number(0.0);
+            let optional_comment = cx.string("");
+            address.set(&mut cx, "service_name", service_name).ok();
+            address.set(&mut cx, "protocal", protocal).ok();
+            address.set(&mut cx, "open_frequency", open_frequency).ok();
+            address
+                .set(&mut cx, "optional_comment", optional_comment)
+                .ok();
+        }
         address.set(&mut cx, "ip", ip).ok();
         address.set(&mut cx, "port", port).ok();
-        address.set(&mut cx, "service_name", service_name).ok();
-        address.set(&mut cx, "protocal", protocal).ok();
-        address.set(&mut cx, "open_frequency", open_frequency).ok();
-        address
-            .set(&mut cx, "optional_comment", optional_comment)
-            .ok();
         open_address_array.set(&mut cx, i as u32, address).ok();
     }
     Ok(open_address_array)
@@ -86,19 +100,32 @@ pub fn scan_port_addrs_range(mut cx: FunctionContext) -> JsResult<JsArray> {
         let address = JsObject::new(&mut cx);
         let ip = cx.string(open_adrr.ip.clone());
         let port = cx.number(open_adrr.port);
-        let x = port_scanner::get_services_tcp();
-        let service_name = cx.string(x[&open_adrr.port].service_name.clone());
-        let protocal = cx.string(x[&open_adrr.port].protocal.clone());
-        let open_frequency = cx.number(x[&open_adrr.port].open_frequency.clone());
-        let optional_comment = cx.string(x[&open_adrr.port].optional_comment.clone());
+        let x = get_services::get_services_tcp();
+        if x.contains_key(&open_adrr.port) {
+            let service_name = cx.string(x[&open_adrr.port].service.clone());
+            let protocal = cx.string(x[&open_adrr.port].protocal.clone());
+            let open_frequency = cx.number(x[&open_adrr.port].frequency.clone());
+            let optional_comment = cx.string(x[&open_adrr.port].description.clone());
+            address.set(&mut cx, "service_name", service_name).ok();
+            address.set(&mut cx, "protocal", protocal).ok();
+            address.set(&mut cx, "open_frequency", open_frequency).ok();
+            address
+                .set(&mut cx, "optional_comment", optional_comment)
+                .ok();
+        } else {
+            let service_name = cx.string("unknown");
+            let protocal = cx.string("tcp");
+            let open_frequency = cx.number(0.0);
+            let optional_comment = cx.string("");
+            address.set(&mut cx, "service_name", service_name).ok();
+            address.set(&mut cx, "protocal", protocal).ok();
+            address.set(&mut cx, "open_frequency", open_frequency).ok();
+            address
+                .set(&mut cx, "optional_comment", optional_comment)
+                .ok();
+        }
         address.set(&mut cx, "ip", ip).ok();
         address.set(&mut cx, "port", port).ok();
-        address.set(&mut cx, "service_name", service_name).ok();
-        address.set(&mut cx, "protocal", protocal).ok();
-        address.set(&mut cx, "open_frequency", open_frequency).ok();
-        address
-            .set(&mut cx, "optional_comment", optional_comment)
-            .ok();
         open_address_array.set(&mut cx, i as u32, address).ok();
     }
     Ok(open_address_array)

@@ -68,8 +68,6 @@ fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("sha3_256_hash", encode_and_decode::sha3_256_hash)?;
     cx.export_function("sha3_512_hash", encode_and_decode::sha3_512_hash)?;
     cx.export_function("sha3_384_hash", encode_and_decode::sha3_384_hash)?;
-    cx.export_function("shake128_hash", encode_and_decode::shake128_hash)?;
-    cx.export_function("shake256_hash", encode_and_decode::shake256_hash)?;
     cx.export_function("keccak224_hash", encode_and_decode::keccak224_hash)?;
     cx.export_function("keccak256_hash", encode_and_decode::keccak256_hash)?;
     cx.export_function("keccak384_hash", encode_and_decode::keccak384_hash)?;
